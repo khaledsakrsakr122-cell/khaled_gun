@@ -1,0 +1,2 @@
+why git is not connect with vercel
+it say connect form 60 minutes
