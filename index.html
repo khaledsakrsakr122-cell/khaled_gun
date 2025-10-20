@@ -1,398 +1,601 @@
-<!DOCTYPE html> 
-<html lang="ar"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <link rel="shortcut icon" href="OIP.png"> 
-    <meta name="description" content="ادعم العمدة خالد صقر، مرشحكم في انتخابات مجلس النواب 2025 - رمز المسدس. أنشئ كارت دعمك الشخصي وشاركه مع أصدقائك."> 
-    <meta name="keywords" content="العمدة خالد صقر, خالد صقر, انتخابات 2025, مرشح مجلس النواب, رمز المسدس, دعم خالد صقر, زاوية صقر, خالد صقر ابن البلد, كارت دعم, دعم مرشح, صور دعم المرشح"> 
-    <meta name="author" content="العمدة خالد صقر"> 
-    <meta property="og:title" content="ادعم العمدة خالد صقر - رمز المسدس"> 
-    <meta property="og:description" content="اصنع كارت دعمك وشارك في حملة دعم العمدة خالد صقر لانتخابات مجلس النواب 2025."> 
-    <meta property="og:image" content="https://example.com/khaled_logo.png"> 
-    <meta property="og:url" content="https://example.com/"> 
-    <meta property="og:type" content="website"> 
-    <meta name="twitter:card" content="summary_large_image"> 
-    <meta name="twitter:title" content="ادعم العمدة خالد صقر - رمز المسدس"> 
-    <meta name="twitter:description" content="أنشئ كارت دعمك وشارك مع أصدقائك."> 
-    <meta name="twitter:image" content="https://example.com/khaled_logo.png"> 
-    <title>العمدة خالد صقر ثقتكم رمز المسدس</title> 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"> 
-    <style> 
-        body { 
-            text-align: center; 
-            font-family: 'Cairo', sans-serif; 
-            direction: rtl; 
-            background-color: #f0f0f0; 
-            margin: 0; 
-            padding: 20px; 
-            overflow-x: hidden; 
-        } 
-        #splash { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: linear-gradient(135deg, #003366, #007bff); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            color: white; 
-            font-size: 32px; 
-            font-weight: bold; 
-            z-index: 9999; 
-            opacity: 1; 
-            animation: fadeOut 1.5s ease 2s forwards; 
-        } 
-        #splash span { 
-            font-size: 48px; 
-            margin-top: 20px; 
-        } 
-        @keyframes fadeOut { 
-            to { 
-                opacity: 0; 
-                visibility: hidden; 
-            } 
-        } 
-        #mainTitle { 
-            color: #003366; 
-            font-weight: 800; 
-            margin-bottom: 30px; 
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.1); 
-            font-size: clamp(24px, 6vw, 42px); 
-            text-align: center; 
-            opacity: 0; 
-            transform: translateY(50px); 
-            animation: fadeUp 1.2s ease forwards; 
-            animation-delay: 2.3s; 
-        } 
-        @keyframes fadeUp { 
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            } 
-        } 
-        .container { 
-            margin: auto; 
-            max-width: 1080px; 
-            background: #fff; 
-            padding: 20px; 
-            border-radius: 10px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            opacity: 0; 
-            transform: translateY(50px); 
-            animation: fadeUp 1.5s ease forwards; 
-            animation-delay: 2.5s; 
-            margin-bottom: 80px; 
-        } 
-        .hidden { 
-            display: none; 
-        } 
-        #preview { 
-            width: 300px; 
-            height: 300px; 
-            margin: 10px auto; 
-            overflow: hidden; 
-            border: 1px solid #ccc; 
-        } 
-        #preview img { 
-            max-width: 100%; 
-        } 
-        #finalCanvas { 
-            border: 1px solid #ccc; 
-            display: none; 
-            max-width: 100%; 
-            margin-top: 20px; 
-        } 
-        #downloadBtn, #goToPageBtn, #shareBtn { 
-            display: none; 
-            margin: 10px 10px; 
-            font-size: 18px; 
-            text-decoration: none; 
-            padding: 10px 20px; 
-            border-radius: 5px; 
-            cursor: pointer; 
-        } 
-        #downloadBtn, #goToPageBtn { 
-            background-color: #4CAF50; 
-            color: #fff; 
-        } 
-        #downloadBtn:hover, #goToPageBtn:hover { 
-            background-color: #45a049; 
-        } 
-        #shareBtn { 
-            background-color: #1877f2; 
-            color: #fff; 
-        } 
-        #shareBtn:hover { 
-            background-color: #145dbf; 
-        } 
-        #nameInput { 
-            width: 80%; 
-            max-width: 400px; 
-            padding: 12px 15px; 
-            font-size: 20px; 
-            font-family: 'Cairo', sans-serif; 
-            text-align: center; 
-            border: 2px solid #4CAF50; 
-            border-radius: 10px; 
-            outline: none; 
-            transition: all 0.3s ease-in-out; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-        } 
-        #nameInput:focus { 
-            border-color: #003366; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
-        } 
-        #imageInput { 
-            display: none; 
-        } 
-        .custom-file-label { 
-            display: inline-block; 
-            padding: 12px 20px; 
-            font-size: 18px; 
-            background-color: #4CAF50; 
-            color: #fff; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: background-color 0.3s; 
-        } 
-        .custom-file-label:hover { 
-            background-color: #45a049; 
-        } 
-        .file-hint { 
-            font-size: 14px; 
-            color: #555; 
-            margin-top: 8px; 
-        } 
-        .scroll-banner { 
-            position: fixed; 
-            bottom: 0; 
-            right: 0; 
-            width: 100%; 
-            background: linear-gradient(90deg, #003366, #007bff); 
-            color: white; 
-            font-size: 22px; 
-            font-weight: bold; 
-            overflow: hidden; 
-            white-space: nowrap; 
-            padding: 10px 0; 
-            z-index: 999; 
-        } 
-        .scroll-text { 
-            display: inline-flex; 
-            align-items: center; 
-            animation: scroll-left 12s linear infinite; 
-        } 
-        .scroll-text img { 
-            width: 40px; 
-            height: 40px; 
-            margin: 0 8px; 
-            vertical-align: middle; 
-            border-radius: 50%; 
-            background-color: #ffffff; 
-            padding: 5px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
-            transition: transform 0.3s ease, box-shadow 0.3s ease; 
-        } 
-        .scroll-text img:hover { 
-            transform: scale(1.1); 
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3); 
-        } 
-        @keyframes scroll-left { 
-            from { 
-                transform: translateX(100%); 
-            } 
-            to { 
-                transform: translateX(-100%); 
-            } 
-        } 
-    </style> 
-</head> 
-<body> 
-    <div id="splash"> 
-        <div>مرحبًا بكم</div> 
-        <span>العمدة خالد صقر</span> 
-    </div> 
-    <h1 id="mainTitle">ادعم مرشحك فى انتخابات<wbr> مجلس النواب 2025</h1> 
-    <div class="container"> 
-        <img src="khaled_logo.png" alt="صورة العمدة خالد صقر" style="max-width: 100%; height: auto;"> 
-        <br><br> 
-        <input type="text" id="nameInput" placeholder="اكتب اسمك هنا" autofocus> 
-        <br><br> 
-        <label for="imageInput" class="custom-file-label">📷 اختر صورتك</label> 
-        <input type="file" id="imageInput" accept="image/*"> 
-        <div class="file-hint">الرجاء رفع صورة شخصية واضحة</div> 
-        <br><br> 
-        <div id="cropperContainer" class="hidden"> 
-            <h3>قص صورتك</h3> 
-            <div id="preview"><img id="imagePreview" alt="معاينة"></div> 
-            <button id="cropBtn">اعتماد القص</button> 
-        </div> 
-        <button id="generateBtn" class="hidden">إنشاء كارت الدعم</button> 
-        <canvas id="finalCanvas" width="1080" height="1350"></canvas> 
-        <br> 
-        <a id="downloadBtn" download="card.png">تحميل الكارت</a> 
-        <a id="goToPageBtn" href="https://www.facebook.com/share/1A8YXzAtjK/" target="_blank">زيارة صفحتنا</a> 
-        <a id="shareBtn" class="hidden" target="_blank">📤 شارك على فيسبوك</a> 
-    </div> 
-    <div class="scroll-banner"> 
-        <div class="scroll-text"> 
-            <img src="OIP.png" alt="المسدس"> صوتك هيفرق ... شارك وادعم العمدة خالد صقر رمز المسدس <img src="OIP.png" alt="المسدس"> 
-        </div> 
-    </div> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script> 
-    <script> 
-        let cropper; 
-        let croppedImageData; 
-        const imageInput = document.getElementById('imageInput'); 
-        const cropperContainer = document.getElementById('cropperContainer'); 
-        const imagePreview = document.getElementById('imagePreview'); 
-        const cropBtn = document.getElementById('cropBtn'); 
-        const generateBtn = document.getElementById('generateBtn'); 
-        const finalCanvas = document.getElementById('finalCanvas'); 
-        const downloadBtn = document.getElementById('downloadBtn'); 
-        const goToPageBtn = document.getElementById('goToPageBtn'); 
-        const nameInput = document.getElementById('nameInput'); 
-        const shareBtn = document.getElementById('shareBtn'); 
+<!DOCTYPE html>
+<html lang="ar">
 
-        window.addEventListener("load", () => nameInput.focus()); 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="images/OIP.png">
+  <title>العمدة خالد صقر – رمز المسدس</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 
-        imageInput.addEventListener('change', function() { 
-            const file = this.files[0]; 
-            if (!file) return; 
-            const reader = new FileReader(); 
-            reader.onload = function(e) { 
-                imagePreview.src = e.target.result; 
-                cropperContainer.classList.remove('hidden'); 
-                if (cropper) cropper.destroy(); 
-                cropper = new Cropper(imagePreview, { 
-                    aspectRatio: 1, 
-                    viewMode: 2 
-                }); 
-            }; 
-            reader.readAsDataURL(file); 
-        }); 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        cropBtn.addEventListener('click', function() { 
-            if (!cropper) return; 
-            const canvas = cropper.getCroppedCanvas({ width: 300, height: 300 }); 
-            croppedImageData = canvas.toDataURL('image/png'); 
-            cropperContainer.classList.add('hidden'); 
-            generateBtn.classList.remove('hidden'); 
-        }); 
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      text-align: center;
+      background-color: #f0f0f0;
+      overflow-x: hidden;
+    }
 
-        generateBtn.addEventListener('click', function() { 
-            if (!nameInput.value.trim()) { 
-                alert("من فضلك اكتب اسمك"); 
-                return; 
-            } 
-            const ctx = finalCanvas.getContext('2d'); 
-            const bg = new Image(); 
-            bg.src = "khaled_support.png"; 
-            const userImg = new Image(); 
-            userImg.src = croppedImageData; 
-            let loaded = 0; 
-            [bg, userImg].forEach(img => { 
-                img.onload = () => { 
-                    loaded++; 
-                    if (loaded === 2) drawFinal(ctx, bg, userImg); 
-                }; 
-            }); 
+    /* ===== الشريط العلوي المتحرك ===== */
+    .top-ticker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(0, 74, 173, 0.98), rgba(0, 180, 216, 0.98));
+      color: #fff;
+      z-index: 10010;
+      overflow: hidden;
+      padding: 10px 0;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
 
-        }); 
-        
+    .top-ticker__inner {
+      /* display: inline-block; */
+      white-space: nowrap;
+      will-change: transform;
+      animation: topTickerMove 18s linear infinite;
+    }
 
-function drawFinal(ctx, bg, userImg) {
-    ctx.clearRect(0, 0, finalCanvas.width, finalCanvas.height);
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+    .top-ticker__inner h1 {
+      /* display: inline-block; */
+      font-size: clamp(22px, 3.2vw, 32px);
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding-right: 40px;
+      direction: rtl;
+      font-size: 36px;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(90deg, #4CAF50, #003366);
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
 
-    // الصورة الشخصية الرئيسية (دائرية)
-    const imageX = (finalCanvas.width - 320) / 2; 
-    const imageY = 80; 
-    const radius = 160; 
-    ctx.save(); 
-    ctx.beginPath(); 
-    ctx.arc(imageX + radius, imageY + radius, radius, 0, 2 * Math.PI); 
-    ctx.closePath(); 
-    ctx.clip(); 
-    ctx.drawImage(userImg, imageX, imageY, 2 * radius, 2 * radius); 
-    ctx.restore(); 
+    @keyframes topTickerMove {
+      from {
+        transform: translateX(100%);
+      }
 
-    const nameY = imageY + 2 * radius + 60; 
-    ctx.fillStyle = "#003366"; 
-    ctx.font = "bold 48px 'Cairo'"; 
-    ctx.textAlign = "center"; 
-    ctx.strokeStyle = "#fff"; 
-    ctx.lineWidth = 5; 
-    ctx.strokeText(nameInput.value, finalCanvas.width / 2, nameY); 
-    ctx.fillText(nameInput.value, finalCanvas.width / 2, nameY); 
+      to {
+        transform: translateX(-100%);
+      }
+    }
 
-    const line1 = "أنا أدعم العمدة خالد صقر في انتخابات"; 
-    const line2 = "مجلس النواب 2025"; 
-    const supportY = nameY + 70; 
-    ctx.font = "bold 42px 'Cairo'"; 
-    ctx.fillStyle = "#003366"; 
-    ctx.textAlign = "center"; 
-    ctx.strokeStyle = "#fff"; 
-    ctx.lineWidth = 5; 
-    ctx.strokeText(line1, finalCanvas.width / 2, supportY); 
-    ctx.fillText(line1, finalCanvas.width / 2, supportY); 
-    ctx.strokeText(line2, finalCanvas.width / 2, supportY + 55); 
-    ctx.fillText(line2, finalCanvas.width / 2, supportY + 55); 
+    .top-ticker__inner:hover {
+      animation-play-state: paused;
+    }
 
-    // رسم صورة الخلفية khaled_support
-    const availableHeight = finalCanvas.height - (supportY + 100); 
-    const availableWidth = finalCanvas.width; 
-    const bgRatio = bg.width / bg.height; 
-    let bgDrawWidth = availableWidth; 
-    let bgDrawHeight = bgDrawWidth / bgRatio; 
-    if (bgDrawHeight > availableHeight) { 
-        bgDrawHeight = availableHeight; 
-        bgDrawWidth = bgDrawHeight * bgRatio; 
-    } 
-    const bgX = (finalCanvas.width - bgDrawWidth) / 2; 
-    const bgY = supportY + 100; 
-    ctx.drawImage(bg, bgX, bgY, bgDrawWidth, bgDrawHeight); 
+    body {
+      --top-ticker-height: 60px;
+    }
 
-    // إضافة صورة المستخدم مع تعديل الموقع
-    const userPhotoSize = 120;
-    // حساب الموضع الأساسي في الثلث الأول (الجزء العلوي) من الصورة
-    const userPhotoY = bgY + (bgDrawHeight * 1/5) - (userPhotoSize / 2) + 45; // زيادة 40 بكسل للأسفل
-    // تحريك إلى اليمين (زيادة 20 بكسل)
-    const userPhotoX = bgX + (bgDrawWidth * 1/7) - (userPhotoSize / 2) + 13; // زيادة 20 بكسل لليمين
-    
-    ctx.save();
-    ctx.beginPath();
-    // جعل الصورة بيضاوية الشكل لمظهر أكثر جمالاً
-    ctx.ellipse(userPhotoX + userPhotoSize/2, userPhotoY + userPhotoSize/2, 
-               userPhotoSize/2, userPhotoSize/1.8, 0, 0, 2 * Math.PI);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(userImg, userPhotoX, userPhotoY, userPhotoSize, userPhotoSize);
-    ctx.restore();
+    #pageContent {
+      padding-top: var(--top-ticker-height);
+    }
 
-    // إضافة إطار حول الصورة
-    ctx.strokeStyle = "#4CAF50";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.ellipse(userPhotoX + userPhotoSize/2, userPhotoY + userPhotoSize/2, 
-               userPhotoSize/2, userPhotoSize/1.8, 0, 0, 2 * Math.PI);
-    ctx.stroke();
+    /* شاشة الترحيب */
+    #intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #002244, #0056b3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      overflow: hidden;
+    }
 
-    finalCanvas.style.display = "block"; 
-    downloadBtn.style.display = "inline-block"; 
-    goToPageBtn.style.display = "inline-block"; 
-    shareBtn.style.display = "inline-block"; 
-    downloadBtn.href = finalCanvas.toDataURL("image/png"); 
+    #intro h1 {
+      color: white;
+      font-size: clamp(30px, 7vw, 64px);
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      animation: fadeInText 3s ease forwards 1s;
+    }
 
-    // مشاركة على فيسبوك 
-    shareBtn.href = "https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/share/1A8YXzAtjK/"; 
-}
-</script> 
-<div></div>
-</body> 
+    @keyframes fadeInText {
+      to {
+        opacity: 1;
+      }
+    }
+
+    #intro img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      object-fit: contain;
+    }
+
+    #intro .gun1,
+    #intro .gun2 {
+      width: 65vw;
+      height: auto;
+    }
+
+    #intro .gun1 {
+      animation: zoomIn 5s ease forwards 1s;
+    }
+
+    #intro .gun2 {
+      animation: spinIn 5s ease forwards 2.5s;
+    }
+
+    #intro .logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: logoFadeIn 3s ease forwards 6.5s;
+    }
+
+    #intro .support {
+      width: 70%;
+      max-width: 600px;
+      height: auto;
+      animation: spinInSlow 5s ease forwards 5s;
+    }
+
+    @keyframes zoomIn {
+      0% {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes spinIn {
+      0% {
+        transform: translate(-50%, -50%) rotate(-180deg) scale(0.8);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes spinInSlow {
+      0% {
+        transform: translate(-50%, -50%) rotate(90deg) scale(0.9);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1.05);
+        opacity: 1;
+      }
+    }
+
+    @keyframes logoFadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    #intro.fadeOut {
+      animation: fadeOutIntro 2s ease forwards;
+    }
+
+    @keyframes fadeOutIntro {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* ✅ الطبقة الشفافة في نهاية الأنيميشن */
+    .intro-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      animation: overlayFade 2s ease forwards 6s;
+      z-index: 9999;
+    }
+
+    @keyframes overlayFade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* المحتوى */
+    #pageContent {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    #pageContent.visible {
+      opacity: 1;
+    }
+
+    .hero-logo-container {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .hero-logo {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      animation: fadeInLogo 2s ease forwards 1s;
+      opacity: 0;
+    }
+
+    @keyframes fadeInLogo {
+      0% {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    #formSection {
+      padding: 50px 20px 80px;
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 4px solid #003366;
+    }
+
+    #formSection h1 {
+      color: #003366;
+      font-size: clamp(28px, 6vw, 44px);
+      margin-bottom: 35px;
+    }
+
+    /* ✅ تعديل مظهر حقل الاسم */
+    #nameInput {
+      width: 90%;
+      max-width: 500px;
+      padding: 18px 22px;
+      font-size: 32px;
+      color: #2e7d32;
+      border: 2px solid #4CAF50;
+      border-radius: 14px;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 18px auto;
+      display: block;
+      font-weight: bold;
+
+
+    }
+
+    #nameInput:focus {
+      border-color: #003366;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      transform: scale(1.02);
+    }
+
+    .custom-file-label {
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: 22px;
+      background-color: #4CAF50;
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      margin-top: 20px;
+    }
+
+    .custom-file-label:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+    }
+
+    button,
+    a {
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: 22px;
+      border-radius: 12px;
+      border: none;
+      background-color: #4CAF50;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      margin: 25px 8px 0;
+      text-decoration: none;
+    }
+
+    button:hover,
+    a:hover {
+      background-color: #45a049;
+      transform: translateY(-3px);
+    }
+
+    #cropperContainer {
+      display: none;
+      margin-top: 30px;
+    }
+
+    #preview {
+      width: 300px;
+      height: 300px;
+      margin: 20px auto;
+      overflow: hidden;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+    }
+
+    #preview img {
+      max-width: 100%;
+    }
+
+    #canvasContainer {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    #finalCanvas {
+      width: 100%;
+      height: auto;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== بوكس النتيجة الأخضر المتوهج ===== */
+    #resultText {
+      display: none;
+      margin: 40px auto;
+      padding: 30px 20px;
+      width: fit-content;
+      max-width: 90%;
+      background: linear-gradient(135deg, #2e7d32, #43a047);
+      border-radius: 22px;
+      box-shadow: 0 0 20px rgba(67, 160, 71, 0.6);
+      color: #fff;
+      animation: popIn 1s ease forwards, pulseGlow 3s infinite ease-in-out;
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(67, 160, 71, 0.6);
+      }
+
+      50% {
+        box-shadow: 0 0 35px rgba(76, 175, 80, 0.9);
+      }
+    }
+
+    #resultText h2 {
+      color: #fff;
+      font-size: 46px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    #resultText p {
+      color: #fff;
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 0;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      #resultText h2 {
+        font-size: 34px;
+      }
+
+      #resultText p {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ✅ الشريط العلوي المتحرك -->
+  <div class="top-ticker" aria-hidden="true">
+    <div class="top-ticker__inner" role="marquee" aria-label="شريط علوي">
+      <h1>✨ معًا من أجل العمدة خالد صقر — صوتك يصنع الفرق ✨</h1>
+    </div>
+  </div>
+
+  <!-- شاشة الترحيب -->
+  <div id="intro">
+    <h1>العمدة خالد صقر – رمز المسدس</h1>
+    <img src="images/gun_animation_1.png" class="gun1">
+    <img src="images/gun_animation_2.png" class="gun2">
+    <img src="images/khaled_logo.png" class="logo">
+    <img src="images/khaled_support.png" class="support">
+    <div class="intro-overlay"></div> <!-- ✅ تمت الإضافة هنا -->
+  </div>
+
+  <!-- المحتوى -->
+  <div id="pageContent">
+    <div class="hero-logo-container">
+      <img src="images/khaled_logo.png" alt="شعار الحملة" class="hero-logo">
+    </div>
+
+    <div id="formSection">
+      <h1>ادعم مرشحك فى انتخابات مجلس النواب 2025</h1>
+      <input type="text" id="nameInput" placeholder="اكتب اسمك هنا">
+      <br>
+      <label for="imageInput" class="custom-file-label">📷 اختر صورتك</label>
+      <input type="file" id="imageInput" accept="image/*" style="display:none;">
+
+      <div id="cropperContainer">
+        <h3>قص صورتك</h3>
+        <div id="preview"><img id="imagePreview" alt="معاينة"></div>
+        <button id="cropBtn">اعتماد القص</button>
+      </div>
+
+      <button id="generateBtn">إنشاء كارت الدعم</button>
+
+      <div id="resultText">
+        <h2 id="supportName"></h2>
+        <p id="supportPhrase">أنا أدعم العمدة خالد صقر في انتخابات مجلس النواب 2025</p>
+      </div>
+
+      <div id="canvasContainer">
+        <canvas id="finalCanvas" width="1080" height="1350"></canvas>
+      </div>
+
+      <br>
+      <a id="downloadBtn" download="khaled_support_card.png">تحميل الكارت</a>
+      <a id="shareBtn" target="_blank">📤 شارك على فيسبوك</a>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const intro = document.getElementById('intro');
+        intro.classList.add('fadeOut');
+        setTimeout(() => {
+          intro.style.display = 'none';
+          document.getElementById('pageContent').classList.add('visible');
+        }, 1500);
+      }, 8000);
+    });
+
+    const imageInput = document.getElementById('imageInput');
+    const cropperContainer = document.getElementById('cropperContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    const cropBtn = document.getElementById('cropBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const finalCanvas = document.getElementById('finalCanvas');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const nameInput = document.getElementById('nameInput');
+
+    let cropper, croppedImageData;
+
+    imageInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+        cropperContainer.style.display = 'block';
+        if (cropper) cropper.destroy();
+        cropper = new Cropper(imagePreview, { aspectRatio: 1, viewMode: 2 });
+      };
+      reader.readAsDataURL(file);
+    });
+
+    cropBtn.addEventListener('click', function () {
+      if (!cropper) return;
+      const canvas = cropper.getCroppedCanvas({ width: 300, height: 300 });
+      croppedImageData = canvas.toDataURL('image/png');
+      cropperContainer.style.display = 'none';
+      alert("✅ تم قص الصورة بنجاح، اضغط إنشاء كارت الدعم");
+    });
+
+    generateBtn.addEventListener('click', function () {
+      if (!nameInput.value.trim()) {
+        alert("من فضلك اكتب اسمك");
+        return;
+      }
+      if (!croppedImageData) {
+        alert("من فضلك اختر صورتك أولاً");
+        return;
+      }
+
+      const ctx = finalCanvas.getContext('2d');
+      const bg = new Image();
+      bg.src = "images/khaled_support.png";
+      const userImg = new Image();
+      userImg.src = croppedImageData;
+
+      bg.onload = () => {
+        ctx.clearRect(0, 0, finalCanvas.width, finalCanvas.height);
+        ctx.drawImage(bg, 0, 0, finalCanvas.width, finalCanvas.height);
+
+        // موضع الصورة على الكارت
+        const rectWidth = 180;   // عرض الصورة داخل الكارت
+        const rectHeight = 180;  // ارتفاع الصورة
+        const rectX = 71;        // المسافة من يسار الكارت (اضبط إذا لزم الأمر)
+        const rectY = 220;       // المسافة من أعلى الكارت (اضبط لتطابق الصندوق بالضبط)
+
+        // رسم مستطيل الصورة
+        ctx.save();
+        ctx.drawImage(userImg, rectX, rectY, rectWidth, rectHeight);
+        ctx.restore();
+
+        document.getElementById("supportName").textContent = nameInput.value;
+        document.getElementById("resultText").style.display = "block";
+
+        finalCanvas.style.display = "block";
+        downloadBtn.style.display = "inline-block";
+        shareBtn.style.display = "inline-block";
+        downloadBtn.href = finalCanvas.toDataURL("image/png");
+        shareBtn.href = "https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/share/1A8YXzAtjK/";
+      };
+    });
+  </script>
+</body>
+
 </html>
