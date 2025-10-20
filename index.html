@@ -450,6 +450,29 @@
         font-size: 26px;
       }
     }
+
+    /* كود حاطه من اجل الشاشات الصغيرة للشريط المتاحرك */
+    /* ✅ تصغير الشريط العلوي في الموبايل */
+@media (max-width: 600px) {
+  .top-ticker {
+    padding: 6px 0;
+  }
+
+  .top-ticker__inner h1 {
+    font-size: 18px !important;
+    padding-right: 20px;
+  }
+
+  body {
+    --top-ticker-height: 45px; /* تقليل الارتفاع */
+  }
+}
+
+/* ✅ منع الشريط من تغطية الصورة */
+.hero-logo-container {
+  margin-top: var(--top-ticker-height); /* مسافة كافية تحت الشريط */
+}
+
   </style>
 </head>
 
