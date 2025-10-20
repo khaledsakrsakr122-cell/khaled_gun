@@ -472,6 +472,24 @@
 .hero-logo-container {
   margin-top: var(--top-ticker-height); /* مسافة كافية تحت الشريط */
 }
+@media (max-width: 600px) {
+  #resultText {
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  #supportName {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+
+  #supportPhrase {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+  }
+}
 
   </style>
 </head>
@@ -608,8 +626,19 @@
         ctx.drawImage(userImg, rectX, rectY, rectWidth, rectHeight);
         ctx.restore();
 
-        document.getElementById("supportName").textContent = nameInput.value;
-        document.getElementById("resultText").style.display = "block";
+      const supportName = document.getElementById("supportName");
+const supportPhrase = document.getElementById("supportPhrase");
+
+supportName.textContent = nameInput.value;
+
+// تقسيم النص تلقائيًا حسب حجم الشاشة
+if (window.innerWidth <= 600) {
+  supportPhrase.innerHTML = `أنا أدعم العمدة خالد صقر في انتخابات<br>مجلس النواب 2025`;
+} else {
+  supportPhrase.textContent = "أنا أدعم العمدة خالد صقر في انتخابات مجلس النواب 2025";
+}
+
+document.getElementById("resultText").style.display = "block";
 
         finalCanvas.style.display = "block";
         downloadBtn.style.display = "inline-block";
